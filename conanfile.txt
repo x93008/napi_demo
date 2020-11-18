@@ -1,0 +1,7 @@
+[requires]
+nlohmann_json/3.4.0
+maxhub_logger/2.3@screenshare/stable
+
+[generators]
+cmake
+ycm
