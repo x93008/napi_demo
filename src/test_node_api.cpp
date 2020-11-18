@@ -6,6 +6,13 @@
 
 constexpr size_t ARRAY_LENGTH = 10;
 
+#include "maxhub_logger/log.h"
+#include "nlohmann/json.hpp"
+
+namespace {
+const maxhub::utils::LogTag kTag( "napi::demo");
+} // namespace
+
 struct TsfnContext {
     TsfnContext(Napi::Env env) : deferred(std::make_shared<Napi::Promise::Deferred>(Napi::Promise::Deferred::New(env))) {
         for (size_t i = 0; i < ARRAY_LENGTH; ++i) ints[i] = i;
@@ -56,6 +63,16 @@ void threadEntry(TsfnContext *context) {
         napi_status status =
                 context->tsfn.BlockingCall(&context->ints[index], callback);
 
+        nlohmann::json js = ::nlohmann::json::parse("{ \"pi\": 3.14 }");
+        std::cout << "js: " << js.dump() << std::endl;
+        try {
+            double res = js.at("pii").get<double>();
+            double a,b = 1.0;
+            std::cout << res << std::endl;
+        } catch(...) {
+            std::cout << "json error" << std::endl;
+        }
+        LOGI(kTag, "run once");
         if (status != napi_ok) {
             Napi::Error::Fatal(
                     "ThreadEntry",
