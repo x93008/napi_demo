@@ -8,9 +8,5 @@
     "bindings": "~1.2.1",
     "node-addon-api": "2.0.2"
   },
-  "scripts": {
-    "install": "cmake-js compile",
-    "test": "node hello.js"
-  },
   "__npminstall_done": false
 }
